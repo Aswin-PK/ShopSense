@@ -1,0 +1,33 @@
+<section style="margin-top: 10em;">
+    <div class="container">
+        <form class="row g-3" method="POST" action="/admin/add-products" enctype="multipart/form-data">
+            <center><h3>Add Product</h3></center>
+
+            <div class="col-md-6">
+                <label for="inputName" class="form-label">Product name</label>
+                <input type="text" name="name" class="form-control" id="inputName">
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputImage" class="form-label">Image</label>
+                <input type="file" name="image" class="form-control" id="inputImage">
+            </div>
+            
+
+            <div class="col-6">
+                <label for="inputCategory" class="form-label">Category</label>
+                <input type="text" name="category" class="form-control" id="inputCategory" placeholder="Mobile, Laptops, Shoes watches....">
+            </div>
+
+            <div class="col-6">
+                <label for="inputPrice" class="form-label">Price</label>
+                <input type="text" name="price" class="form-control" id="inputPrice" placeholder="In rupee">
+            </div>
+
+            
+            <div class="col-12 ml-4">
+                <button type="submit" class="btn btn-success" style="width:10em;">Add</button>
+            </div>
+        </form>
+    </div>
+</section>
