@@ -7,7 +7,7 @@ var productHelpers = require('../helpers/product-helpers')
 /* GET home page. */
 router.get('/', function(req, res) {
   productHelpers.getProducts().then((products)=>{
-    res.render('index', {products, admin: false});
+    res.render('user/view-products', {products}); 
   })
 });
 

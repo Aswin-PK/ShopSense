@@ -3,10 +3,11 @@ var collection = require('../config/collections')
 
 module.exports = {
 
-    addProduct: (product, callback)=>{
-        // console.log(product)
+    addProduct: (product,category, callback)=>{
+        console.log(category)
+        category = category+'s'
 
-        db.get().collection('Mobiles').insertOne(product).then((data)=>{
+        db.get().collection(category).insertOne(product).then((data)=>{
             // console.log("hello", data.insertedId.toString())
             callback(data.insertedId.toString())
         })
