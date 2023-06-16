@@ -16,7 +16,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                     <li class="nav-item" style="margin:0 0.5em 0 2em">
-                        <a class="nav-link" href="#">Location</a>
+                        <a class="nav-link" href="#"><i class="bi bi-geo-alt-fill"></i> Location</a>
                     </li>
 
                     <li class="nav-item" style="margin:0 0.5em">
@@ -26,10 +26,36 @@
                         <a class="nav-link" href="#"><i class="bi bi-cart3"></i> Cart</a>
                     </li>
 
-                    <li class="nav-item" style="margin:0 0.5em">
-                        <a class="nav-link" href="#"><i class="bi bi-person-circle"></i> Your Account</a>
-                    </li>
-                    
+                    {{#if user}} 
+                    {{!-- -------------------------if user is logged in------------------------- --}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                {{user.firstname}} {{user.lastname}}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="#">{{user.email}}<br>
+                                    <i style="font-size: 0.8em;">Manage Account <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout">Logout &nbsp;&nbsp;&nbsp;<i class="bi bi-box-arrow-right"></i></a></li>
+                            </ul>
+                        </li>
+
+                    {{else}}
+
+                        <li class="nav-item" style="margin:0 0.5em; border: 1px solid white;border-radius:0.7em">
+                            <a class="nav-link" href="/login"><i class="bi"></i> Sign In</a>
+                        </li>
+                        <li class="nav-item bg-dark" style="margin:0 0.5em; border: 1px solid white;border-radius:0.7em">
+                            <a class="nav-link" href="/signup"><i class="bi"></i> Sign Up</a>
+                        </li>
+
+                    {{/if}}
                 </ul>
                 
             </div>

@@ -5,10 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('express-handlebars')
 var db = require('./config/connection')
+var session = require('express-session')
+
 
 var adminRouter = require('./routes/admin');
 var userRouter = require('./routes/user');
 const fileUpload = require('express-fileupload');
+const { MaxKey } = require('mongodb');
 
 
 var app = express();
@@ -24,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
+app.use(session({secret: 'secretKey', cookie: {maxAge: 600000}})) // session will be upto 10 min
 
 db.connect((err)=>{
   if(err) console.log("Connection error")

@@ -1,0 +1,25 @@
+<section style="margin-top: 10em;padding: 0 35em;">
+    <div class="container">
+        <form class="row g-3" method="POST" action="/login" enctype="multipart/form-data">
+            <center><h3>Sign In</h3></center>
+
+            <div class="col-md-12">
+                <label for="email" class="form-label">Email id</label>
+                <input type="email" name="email" class="form-control" id="email" placeholder="example@gmail.com">
+            </div>
+
+            <div class="col-md-12">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Enter password">
+            </div>
+            
+            <div class="col-md-12 mt-4">
+                <button type="submit" class="btn btn-success w-100">Login</button>
+                <div class="form-text text-danger text-center" hidden>Incorrect email/password</div>
+                <div class="text-center mt-3">
+                    <a href="/signup" class="form-text">Don't have account ? signup</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
