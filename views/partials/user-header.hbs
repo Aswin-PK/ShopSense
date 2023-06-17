@@ -18,10 +18,11 @@
                     <li class="nav-item" style="margin:0 0.5em 0 2em">
                         <a class="nav-link" href="#"><i class="bi bi-geo-alt-fill"></i> Location</a>
                     </li>
-
-                    <li class="nav-item" style="margin:0 0.5em">
-                        <a class="nav-link" href="#"><i class="bi bi-bag-check-fill"></i> Orders</a>
-                    </li>
+                    {{#if user}}
+                        <li class="nav-item" style="margin:0 0.5em">
+                            <a class="nav-link" href="#"><i class="bi bi-bag-check-fill"></i> Orders</a>
+                        </li>
+                    {{/if}}
                     <li class="nav-item" style="margin:0 0.5em">
                         <a class="nav-link" href="#"><i class="bi bi-cart3"></i> Cart</a>
                     </li>

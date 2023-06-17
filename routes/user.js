@@ -3,15 +3,21 @@ var express = require('express');
 var router = express.Router();
 var productHelpers = require('../helpers/product-helpers')
 var userHelpers = require('../helpers/user-helpers')
+const verifyLogin = (req, res, next)=>{
+  if(req.session.loggedIn) next()
+  else res.redirect('/login')
+}
 
 
 /* GET home page. */
 router.get('/', function(req, res) {
   let user = req.session.user
-  productHelpers.getProducts().then((products)=>{
+  productHelpers.getAllProducts().then((products)=>{
     res.render('user/view-products', {products, user}); 
   })
 });
+// -----------------------------///////////////////////-----------------------------------------
+
 
 // user login route.....................................................
 
@@ -36,7 +42,8 @@ router.post('/login', (req, res)=>{
   })
 })
 
-// ///////////////////////////////////////////////////////////////////
+// -----------------------------///////////////////////-----------------------------------------
+
 
 // User Register...................................................
 
@@ -46,16 +53,20 @@ router.get('/signup', (req, res)=>{
 
 router.post('/signup', (req, res)=>{
   console.log(req.body)
-  userHelpers.userSignup(req.body).then((user)=>{
+  userHelpers.userSignup(req.body).then((response)=>{
 
-    if(user.status)
+    if(response.status){
+      req.session.loggedIn = true           // session = { ...., loggedIn: true,
+      req.session.user = response.user     //                       user: userdetails from database }
+      // console.log("signup",response);
       res.redirect('/')
+    }
     else
       res.redirect('/signup') 
   })
 })
 
-// ///////////////////////////////////////////////////////////////////
+// -----------------------------///////////////////////-----------------------------------------
 
 // user log out.........................................................................
 
@@ -63,5 +74,7 @@ router.get('/logout', (req, res)=>{
   req.session.destroy()
   res.redirect('/')
 })
+
+// -----------------------------///////////////////////-----------------------------------------
 
 module.exports = router;
