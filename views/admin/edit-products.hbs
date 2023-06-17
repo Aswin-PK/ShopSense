@@ -1,0 +1,45 @@
+<section style="margin-top: 10em;">
+    <div class="container">
+        <form class="row g-3" method="POST" action="/admin/edit-product?id={{productId}}" enctype="multipart/form-data">
+            <center><h3>Edit Product</h3></center>
+
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <label for="inputName" class="form-label">Product name</label>
+                    <input type="text" name="name" class="form-control" id="inputName" value="{{productDetail.name}}">
+                </div>
+
+                <div class="col-md-12">
+                    <label for="inputCategory" class="form-label">Category</label>
+                    <input type="text" name="category" class="form-control" id="inputCategory" placeholder="Mobile, Laptops, Shoes watches...." value="{{productDetail.category}}">
+                </div>
+
+                <div class="col-md-12">
+                    <label for="inputPrice" class="form-label">Price</label>
+                    <input type="text" name="price" class="form-control" id="inputPrice" placeholder="In rupee" value="{{productDetail.price}}">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="col-md-6 mt-4">
+                    <img src="/images/product-images/{{productId}}.png" alt="{{productDetail.name}} image" style="width:7em;height:7.2em" id="imageDisplay">
+                </div>
+                <div class="col-md-12">
+                    <label for="inputImage" class="form-label">Image</label>
+                    <input type="file" name="image" class="form-control" id="inputImage" onchange="displayImage(event)">
+                </div>
+            </div>
+            
+            <div class="col-12 ml-4">
+                <button type="submit" class="btn btn-success" style="width:10em;">Update</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<script>
+    function displayImage(event){
+        document.getElementById('imageDisplay').src = URL.createObjectURL(event.target.files[0])
+    }
+</script>
