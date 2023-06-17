@@ -1,8 +1,8 @@
-// import { MongoClient } from 'mongodb';
 var express = require('express');
 var router = express.Router();
 var productHelpers = require('../helpers/product-helpers')
-var userHelpers = require('../helpers/user-helpers')
+var userHelpers = require('../helpers/user-helpers');
+const { route } = require('./admin');
 const verifyLogin = (req, res, next)=>{
   if(req.session.loggedIn) next()
   else res.redirect('/login')
@@ -77,4 +77,9 @@ router.get('/logout', (req, res)=>{
 
 // -----------------------------///////////////////////-----------------------------------------
 
+
+// cart router .....................
+ router.get('/cart',verifyLogin, (req, res)=>{
+  res.render('user/cart')
+ })
 module.exports = router;
