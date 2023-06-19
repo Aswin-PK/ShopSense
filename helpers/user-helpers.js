@@ -1,6 +1,8 @@
 var db = require('../config/connection')
 var collection = require('../config/collections')
 var bcrypt = require('bcrypt')
+var objectId = require('mongodb').ObjectId
+
 
 module.exports = {
     userLogin: (userData)=>{
@@ -53,6 +55,77 @@ module.exports = {
                 user = {status:false}
                 resolve(user)
             }
+        })
+    },
+
+    addToCart: (userId, productId)=>{
+        let uid = new objectId(userId)
+        let prodid = new objectId(productId)
+        return new Promise(async (resolve, reject)=>{
+            let userCart = await db.get().collection(collection.cartCollection).findOne({userId: uid}) 
+            if(userCart){
+                //if user cart is there it need to be updated with product's Id
+                db.get().collection(collection.cartCollection).updateOne({userId: uid},
+                    {
+                        $push: {products: prodid}
+                    }
+                ).then((response)=>{
+                    resolve()
+                })
+            }
+            else{
+                //create a cart with userid in it
+                let cartObj = {
+                    userId: uid,
+                    products: [prodid]
+                }
+                db.get().collection(collection.cartCollection).insertOne(cartObj).then(()=>{
+                    console.log("product added by creating a cart")
+                    resolve()
+                })
+            }
+            
+        })
+    },
+
+    getCartItems: (userId)=>{
+        let uid = new objectId(userId)
+        return new Promise(async (resolve, reject)=>{
+            let cartItems = await db.get().collection(collection.cartCollection).aggregate([
+                {
+                    $match: {userId: uid}
+                },
+                {
+                    $lookup: {
+                        from: collection.productCollection,
+                        let: {productList: '$products'},
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $in: ['$_id', '$$productList']
+                                    }
+                                }
+                            }
+                        ],
+                        as: 'cartItems'
+                    }
+                }
+            ]).toArray()
+            resolve(cartItems[0].cartItems)
+        })
+    },
+
+    getCartItemCount: (userId)=>{
+        let uid = new objectId(userId)
+        let count = 0
+        return new Promise(async (resolve, reject)=>{
+            let cart = await db.get().collection(collection.cartCollection).findOne({userId: uid})
+            if(cart){
+                count = cart.products.length
+                console.log(count, "\n ", cart);
+            }
+            resolve(count)
         })
     }
 }
