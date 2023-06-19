@@ -1,12 +1,75 @@
-<section class="bg-danger" style="margin-top: 10em;">
+<style>
+    
+    .item-container, .total-container{
+        background-color: #f9f9f9;
+        border-radius: 0.5em;
+        color: #585858;
+    }
+    .total-container{
+        box-shadow: 3px 3px 3px #f3f3f3;
+    }
+</style>
+<section class="" style="margin-top: 10em;">
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-9 bg-warning">
-                heh
+            <div class="col-md-9">
+                
+                {{#each cartItems}}
+                    <div class="row m-3 border item-container">
+                        <div class="edit-item col-md-1 d-flex justify-content-center align-items-center">
+                            <input type="checkbox" name="" id="item-checked" class="" checked style="height:1em;width:1em">
+                        </div>
+                        <div class="item col-md-11">
+                            <div class="row">
+                                <img src="/images/product-images/{{this._id}}.png" alt="" class="col-md-3 p-2" style="">
+                                <div class="col-md-6 p-5">
+                                    <h4>{{this.name}}</h4>
+                                    <h5>Price : {{this.price}}</h5>
+                                    <div class="btns">
+                                        <select name="" id="" class="quantity btn btn-primary">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                        <button class="btn btn-secondary">Remove from cart</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 d-flex justify-content-center align-items-center">
+                                    <h5>Rs. 20000</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+                
             </div>
-            <div class="col-md-3 bg-primary">
-                heh
+            <div class="col-md-3 p-3 h-100 total-container">
+                <div class="sample m-2">
+                    <h4>Subtotal (items) : Rs. 20202</h4>
+                    <a href="#" class="btn btn-warning">Proceed to Buy</a>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    document.querySelectorAll('#item-checked').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const div = checkbox.closest('.item-container');
+            if (!checkbox.checked) {
+                div.style.opacity = 0.3;
+            }
+            else{
+                div.style.opacity = 1;
+            }
+        });
+    });
+</script>
