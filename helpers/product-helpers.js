@@ -4,11 +4,11 @@ var objectId = require('mongodb').ObjectId
 
 module.exports = {
 
-    addProduct: (product,category, callback)=>{
-        console.log(category)
-        category = category+'s'
+    addProduct: (product, callback)=>{
+        // console.log(category)
+        // category = category+'s'
 
-        db.get().collection(category).insertOne(product).then((data)=>{
+        db.get().collection(collection.productCollection).insertOne(product).then((data)=>{
             // console.log("hello", data.insertedId.toString())
             callback(data.insertedId.toString())
         })
@@ -17,7 +17,7 @@ module.exports = {
     getOneProduct: (productId)=>{
         let id = new objectId(productId)
         return new Promise(async (resolve, reject)=>{
-            let products = await db.get().collection(collection.productCollection).find({_id: id}).toArray()
+            let products = await db.get().collection(collection.productCollection).findOne({_id: id}).toArray()
             resolve(products[0])
         })
     },

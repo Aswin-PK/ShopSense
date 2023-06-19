@@ -15,7 +15,7 @@ router.get('/add-products', (req, res)=>{
 });
 
 router.post('/add-products', (req, res)=>{
-  productHelpers.addProduct(req.body, req.body.category, (objectId)=>{
+  productHelpers.addProduct(req.body, (objectId)=>{
     let image = req.files.image
     image.mv('./public/images/product-images/'+objectId+'.png', (err, done)=>{
       if(!err) res.redirect('/admin/add-products')
