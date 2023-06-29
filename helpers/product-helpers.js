@@ -5,8 +5,6 @@ var objectId = require('mongodb').ObjectId
 module.exports = {
 
     addProduct: (product, callback)=>{
-        // console.log(category)
-        // category = category+'s'
 
         db.get().collection(collection.productCollection).insertOne(product).then((data)=>{
             // console.log("hello", data.insertedId.toString())
@@ -15,10 +13,11 @@ module.exports = {
     },
 
     getOneProduct: (productId)=>{
-        let id = new objectId(productId)
+        
         return new Promise(async (resolve, reject)=>{
-            let products = await db.get().collection(collection.productCollection).findOne({_id: id}).toArray()
-            resolve(products[0])
+            let products = await db.get().collection(collection.productCollection).findOne({_id: new objectId(productId)})
+            // console.log(products)
+            resolve(products)
         })
     },
 
@@ -30,18 +29,18 @@ module.exports = {
     },
 
     deleteProduct: (productId)=>{
-        let id = new objectId(productId)
+        // let id = objectId(productId)
         return new Promise((resolve, reject)=>{
-            db.get().collection(collection.productCollection).deleteOne({_id: id}).then(()=>{
+            db.get().collection(collection.productCollection).deleteOne({_id: new objectId(productId)}).then(()=>{
                 resolve(true)
             })
         })
     },
 
     updateProduct: (productId, productDetail)=>{
-        let id = new objectId(productId)
+        // let id = objectId(productId)
         return new Promise((resolve, reject)=>{
-            db.get().collection(collection.productCollection).updateOne({_id: id},{
+            db.get().collection(collection.productCollection).updateOne({_id: new objectId(productId)},{
                 $set: {
                     name: productDetail.name,
                     category: productDetail.category,

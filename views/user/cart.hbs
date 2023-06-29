@@ -8,6 +8,10 @@
     .total-container{
         box-shadow: 3px 3px 3px #f3f3f3;
     }
+    .itemButton >*{
+        height: 2.5em;
+        margin: 0.2em
+    }
 </style>
 <section class="" style="margin-top: 10em;">
     <div class="container mt-5">
@@ -15,6 +19,7 @@
             <div class="col-md-9">
                 
                 {{#each cartItems}}
+                    {{#each this.products}}
                     <div class="row m-3 border item-container">
                         <div class="edit-item col-md-1 d-flex justify-content-center align-items-center">
                             <input type="checkbox" name="" id="item-checked" class="" checked style="height:1em;width:1em">
@@ -25,35 +30,34 @@
                                 <div class="col-md-6 p-5">
                                     <h4>{{this.name}}</h4>
                                     <h5>Price : {{this.price}}</h5>
-                                    <div class="btns">
-                                        <select name="" id="" class="quantity btn btn-primary">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
-                                        </select>
-                                        <button class="btn btn-secondary">Remove from cart</button>
+                                    <div class="itemButton col-12">
+                                        <button class="btn btn-secondary" onclick="changeQuantity('{{../_id}}', '{{this._id}}', -1)">-</button>
+                                            <input type="text" id="{{this._id}}" style="width: 3em;text-align:center" value="{{../quantity}}">
+                                        <button class="btn btn-secondary" onclick="changeQuantity('{{../_id}}', '{{this._id}}', 1)">+</button>
+                                        <button class="btn btn-secondary float-right" style="background-color:rgb(206, 74, 74)" onclick="removeCartItem('{{../_id}}', '{{this._id}}')">Remove from cart</button>
                                     </div>
                                 </div>
-                                <div class="col-md-3 d-flex justify-content-center align-items-center">
+                                {{!-- <div class="col-md-3 d-flex justify-content-center align-items-center">
                                     <h5>Rs. 20000</h5>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
+                    {{/each}}
                 {{/each}}
                 
             </div>
             <div class="col-md-3 p-3 h-100 total-container">
                 <div class="sample m-2">
-                    <h4>Subtotal (items) : Rs. 20202</h4>
-                    <a href="#" class="btn btn-warning">Proceed to Buy</a>
+                    <h4>Subtotal : Rs. <span id="total">{{totalAmount}}</span></h4><br>
+
+                        {{#each cartItems}}
+                            {{#each products}}
+                                <i style="font-size:1.2em">{{this.name}} ( x {{../quantity}} )</i><br>
+                            {{/each}}
+                        {{/each}}
+
+                    <a href="/place-order" class="btn btn-warning">Proceed to Buy</a>
                 </div>
             </div>
         </div>
@@ -72,4 +76,6 @@
             }
         });
     });
+
+    
 </script>

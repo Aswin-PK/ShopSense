@@ -17,8 +17,12 @@ router.get('/add-products', (req, res)=>{
 router.post('/add-products', (req, res)=>{
   productHelpers.addProduct(req.body, (objectId)=>{
     let image = req.files.image
+    req.body.price = parseInt(req.body.price)
     image.mv('./public/images/product-images/'+objectId+'.png', (err, done)=>{
-      if(!err) res.redirect('/admin/add-products')
+      if(!err){
+        console.log("Product added successfull")
+        res.redirect('/admin/add-products')
+      } 
       else console.log(err)
     })
   })
@@ -49,7 +53,8 @@ router.get('/edit-product', async (req, res)=>{
 router.post('/edit-product', (req, res)=>{
   productId = req.query.id
   // console.log(req.body)
-  
+  req.body.price = parseInt(req.body.price) // converting type of price as integer
+
   productHelpers.updateProduct(productId, req.body).then((result)=>{
     if(result) {
       // console.log("object updated") 
